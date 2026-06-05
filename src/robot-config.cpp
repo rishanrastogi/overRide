@@ -8,18 +8,18 @@ vex::controller Controller;
 Chassis chassis(
     // Left drivetrain motors (left/right is looking from behind the robot)
     mik::motor_group({
-        mik::motor(PORT1, false, blue_6_1, "left front motor"), // For holonomic drivetrains, you must include "front" and "back" for the motor names
-        mik::motor(PORT2, false, blue_6_1, "left middle motor"),
-        mik::motor(PORT3, false, blue_6_1, "left back motor"),
+        mik::motor(PORT8, false, blue_6_1, "left front motor"), // For holonomic drivetrains, you must include "front" and "back" for the motor names
+        mik::motor(PORT20, false, blue_6_1, "left middle motor"),
+        mik::motor(PORT9, false, blue_6_1, "left back motor"),
     }),
     // Right drivetrain motors
     mik::motor_group({
-        mik::motor(PORT4, true, blue_6_1, "right front motor"),
-        mik::motor(PORT5, true, blue_6_1, "right middle motor"),
-        mik::motor(PORT6, true, blue_6_1, "right back motor"),
+        mik::motor(PORT3, true, blue_6_1, "right front motor"),
+        mik::motor(PORT4, true, blue_6_1, "right middle motor"),
+        mik::motor(PORT11, true, blue_6_1, "right back motor"),
     }),
 	
-    PORT7,  // Inertial sensor port
+    PORT0,  // Inertial sensor port
     360,    // Inertial scale (rotation reading after a full 360° turn)
 	false,  // Forces inertial sensor to recalibrate until it is within minimum threshold of 0.05 deg for 1 second
 	
@@ -37,12 +37,12 @@ Chassis chassis(
     // Distance sensors mounted on a face of the robot
     mik::distance_reset({
         mik::distance(
-			PORT8,		   // Distance sensor port
+			PORT0,		   // Distance sensor port
             rear_sensor,   // "front_sensor", "rear_sensor", "left_sensor", "right_sensor"
             4,             // X offset from tracking center (in). Positive = right of center, negative = left. 
             6              // Y offset from tracking center (in). Positive = in front of center, negative = behind.
         ),
-        mik::distance(PORT3, left_sensor, -6, 4),
+        mik::distance(PORT0, left_sensor, -6, 4),
     })
 );
 
@@ -50,22 +50,20 @@ Chassis chassis(
 
 /* Creating a motor group in assembly */
 mik::motor_group Assembly::lower_intake_motors({
-	mik::motor(PORT1, true, green_18_1, "bottom_intake"),
-	mik::motor(PORT2, false, green_18_1, "middle_intake")
+	mik::motor(PORT16, true, green_18_1, "right_bottom"),
+	mik::motor(PORT15, false, green_18_1, "left_bottom")
 });
-
-/* Creating upper intake motor in assembly */
-mik::motor Assembly::upper_intake_motor(PORT16, false, blue_6_1, "upper_intake");
-
+mik::motor_group Assembly::conveyor_motors({
+	mik::motor(PORT10, true, green_18_1, "right_bottom"),
+	mik::motor(PORT2, false, green_18_1, "left_bottom")
+});
 /* Creating pistons in assembly */
-mik::piston Assembly::scraper_piston(PORT_B);
-mik::piston Assembly::wing_piston(PORT_A);
+mik::piston Assembly::claw_piston(PORT_B);
+mik::piston Assembly::grip_piston(PORT_A);
 
 /* Creating alternative vex devices in assembly */
-vex::rotation Assembly::rotation_sensor(PORT6);
-vex::optical Assembly::optical_sensor(PORT13);
-vex::limit Assembly::limit_switch(to_triport(PORT_F));
-
+vex::rotation Assembly::rotation_sensor(PORT0);
+vex::optical Assembly::optical_sensor(PORT0);
 
 
 

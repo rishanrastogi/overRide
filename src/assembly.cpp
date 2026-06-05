@@ -23,9 +23,9 @@ void Assembly::control() {
     }
 
     lower_intake_control();
-    upper_intake_control();
-    wing_piston_control();
-    scraper_piston_control();
+    conveyor_motors_control();
+    claw_piston_control();
+    grip_piston_control();
 }
 
 
@@ -41,29 +41,29 @@ void Assembly::lower_intake_control() {
 }
 
 // Spins intake forward if R2 is being held, reverse if Button Down is being held; stops otherwise
-void Assembly::upper_intake_control() {
+void Assembly::conveyor_motors_control() {
     if (Controller.ButtonR2.pressing()) {
-        upper_intake_motor.spin(fwd, 12, volt);
+        conveyor_motors.spin(fwd, 12, volt);
     } else if (Controller.ButtonDown.pressing()) {
-        upper_intake_motor.spin(fwd, -12, volt);
+        conveyor_motors.spin(fwd, -12, volt);
     } else {
-        upper_intake_motor.stop();
+        conveyor_motors.stop();
     }
 }
 
 // Extends piston when button R1 is pressed, releases otherwise 
-void Assembly::wing_piston_control() {
+void Assembly::claw_piston_control() {
     if (Controller.ButtonR1.pressing()) {
-        wing_piston.open();
+        claw_piston.open();
     } else {
-        wing_piston.close();
+        claw_piston.close();
     }
 }
 
 // Extends or retracts piston when button A is pressed, 
 // can only extend or retract again until button A is released and pressed again
-void Assembly::scraper_piston_control() {
+void Assembly::grip_piston_control() {
     if (btnA_new_press(Controller.ButtonA.pressing())) {
-        scraper_piston.toggle();
+        grip_piston.toggle();
     }
 }
