@@ -8,15 +8,15 @@ vex::controller Controller;
 Chassis chassis(
     // Left drivetrain motors (left/right is looking from behind the robot)
     mik::motor_group({
-        mik::motor(PORT8, false, blue_6_1, "left front motor"), // For holonomic drivetrains, you must include "front" and "back" for the motor names
-        mik::motor(PORT20, false, blue_6_1, "left middle motor"),
+        mik::motor(PORT8, true, blue_6_1, "left front motor"), // For holonomic drivetrains, you must include "front" and "back" for the motor names
+        mik::motor(PORT20, true, blue_6_1, "left middle motor"),
         mik::motor(PORT9, false, blue_6_1, "left back motor"),
     }),
     // Right drivetrain motors
     mik::motor_group({
-        mik::motor(PORT3, true, blue_6_1, "right front motor"),
+        mik::motor(PORT3, false, blue_6_1, "right front motor"),
         mik::motor(PORT4, true, blue_6_1, "right middle motor"),
-        mik::motor(PORT11, true, blue_6_1, "right back motor"),
+        mik::motor(PORT11, false, blue_6_1, "right back motor"),
     }),
 	
     PORT0,  // Inertial sensor port
@@ -55,7 +55,7 @@ mik::motor_group Assembly::lower_intake_motors({
 });
 mik::motor_group Assembly::conveyor_motors({
 	mik::motor(PORT10, true, green_18_1, "right_bottom"),
-	mik::motor(PORT2, false, green_18_1, "left_bottom")
+	mik::motor(PORT1, false, green_18_1, "left_bottom")
 });
 /* Creating pistons in assembly */
 mik::piston Assembly::claw_piston(PORT_B);

@@ -31,9 +31,10 @@ void Assembly::control() {
 
 // Spins intake forward if L1 is being held, reverse if L2 is being held; stops otherwise
 void Assembly::lower_intake_control() {
-    if (Controller.ButtonL1.pressing()) {
+    lower_intake_motors.setStopping(hold);
+    if (Controller.ButtonB.pressing()) {
         lower_intake_motors.spin(fwd, 12, volt);
-    } else if (Controller.ButtonL2.pressing()) {
+    } else if (Controller.ButtonX.pressing()) {
         lower_intake_motors.spin(fwd, -12, volt);
     } else {
         lower_intake_motors.stop();
@@ -42,28 +43,26 @@ void Assembly::lower_intake_control() {
 
 // Spins intake forward if R2 is being held, reverse if Button Down is being held; stops otherwise
 void Assembly::conveyor_motors_control() {
-    if (Controller.ButtonR2.pressing()) {
+    conveyor_motors.setStopping(hold);
+    if (Controller.ButtonR1.pressing()) {
         conveyor_motors.spin(fwd, 12, volt);
-    } else if (Controller.ButtonDown.pressing()) {
+    } else if (Controller.ButtonR2.pressing()) {
         conveyor_motors.spin(fwd, -12, volt);
     } else {
         conveyor_motors.stop();
     }
 }
 
-// Extends piston when button R1 is pressed, releases otherwise 
+// toggle for the claw
 void Assembly::claw_piston_control() {
-    if (Controller.ButtonR1.pressing()) {
-        claw_piston.open();
-    } else {
-        claw_piston.close();
+    if (btnL1_new_press(Controller.ButtonL1.pressing())) {
+        claw_piston.toggle();
     }
 }
 
-// Extends or retracts piston when button A is pressed, 
-// can only extend or retract again until button A is released and pressed again
+// toggle for the grip
 void Assembly::grip_piston_control() {
-    if (btnA_new_press(Controller.ButtonA.pressing())) {
+    if (btnL2_new_press(Controller.ButtonL2.pressing())) {
         grip_piston.toggle();
     }
 }
