@@ -69,6 +69,14 @@ std::string blue_left_elim(bool calibrate, auto_variation var, bool get_name) {
     }
 
     // Place start of autonoumous here
+    chassis.left_drive.spin(fwd, 6, volt);
+    chassis.right_drive.spin(fwd, 6, volt);
+    vex::wait(1,sec);
+    chassis.left_drive.stop();
+    chassis.right_drive.stop();
+    assembly.conveyor_motors.spin(fwd, 12, volt);
+    vex::wait(0.75, sec);
+    assembly.conveyor_motors.stop();
 
     return "";
 }
